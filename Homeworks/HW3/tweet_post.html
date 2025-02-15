@@ -30,23 +30,60 @@
             max-width: 400px;
             word-wrap: break-word;
         }
+        .btn-disabled {
+            background-color: lightgray !important;
+            border-color: gray !important;
+            color: white !important;
+            pointer-events: none;
+        }
+        .char-count {
+            font-size: 14px;
+            color: gray;
+        }
+        .char-count.exceeded {
+            color: red;
+            font-weight: bold;
+        }
     </style>
 
 <script>
     function createPost(message) {
         if (message.trim() === "") return; // Prevent empty posts
+        if(message.length > 30 ) return;
 
         let newPost = $("<div class='post'>").text(message);
         $("#updates").prepend(newPost); // Add new post at the top
         $("#userInput").val(""); // Clear textarea after posting
+        $("#charCount").text("0/30");
     }
 
-    $(document).ready(function(){
-        $("#post").click(function(){
-            let userMessage = $("#userInput").val();
-            createPost(userMessage);
+    function updateCount(){
+            let charCount = $("#userInput").val().length;
+            $("#charCount").text(charCount + "/30");
+
+            if (charCount > 30 || charCount === 0) {
+                $("#charCount").addClass("exceeded");
+                $("#post").prop("disabled", true).addClass("btn-disabled").removeClass("btn-primary"); // Disable button if over 30 or empty
+            } else {
+                $("#charCount").removeClass("exceeded");
+                $("#post").prop("disabled", false).removeClass("btn-disabled").addClass("btn-primary"); // Enable button when valid
+            }
+        }
+
+        $(document).ready(function(){
+            $("#userInput").on("input", function() {
+                updateCount();
+            });
+
+            $("#post").click(function(){
+                let userMessage = $("#userInput").val();
+                createPost(userMessage);
+            });
+
+            // Start with the button disabled
+            $("#post").prop("disabled", true).addClass("btn-disabled").removeClass("btn-primary");
         });
-    });
+        `
 </script>
 </head>
 <body style="background-color: black;">
@@ -64,6 +101,7 @@
     </div>
     <div class="row mt-2">
         <div class="col-2">
+            <div id="charCount" class="char-count">0/30</div>
             <button id="post" class="btn btn-primary">Post Tweet</button>
         </div>
     </div>
