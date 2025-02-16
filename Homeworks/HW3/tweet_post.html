@@ -21,6 +21,10 @@
             resize: vertical;   /* Allows user to resize vertically */
             font-size: 16px;    /* Common size for input fields */
         }
+        .post-header {
+            font-weight: bold;
+            color: yellow;
+        }
         .post {
             background-color: blue;
             color: white;
@@ -47,27 +51,50 @@
     </style>
 
 <script>
-    function createPost(message) {
-        if (message.trim() === "") return; // Prevent empty posts
-        if(message.length > 30 ) return;
+    const username = "Nick"; // Placeholder username
 
-        let newPost = $("<div class='post'>").text(message);
+    function createPost(message) {
+        if (message.trim() === "" || message.length > 30) return; // Prevent invalid posts
+
+        let newPost = $("<div class='post'>").html(
+            `<div class="post-header">@${username}</div>
+            <div>${message}</div>`
+        );
         $("#updates").prepend(newPost); // Add new post at the top
-        $("#userInput").val(""); // Clear textarea after posting
+        $("#userInput").val("").focus(); // Clear textarea after posting
         $("#charCount").text("0/30");
+        disable_button();
     }
 
     function updateCount(){
-            let charCount = $("#userInput").val().length;
-            $("#charCount").text(charCount + "/30");
+            let message = $("#userInput").val();
+            let charCount = message.length;
 
-            if (charCount > 30 || charCount === 0) {
-                $("#charCount").addClass("exceeded");
-                $("#post").prop("disabled", true).addClass("btn-disabled").removeClass("btn-primary"); // Disable button if over 30 or empty
+            if(charCount <= 30){
+                $("#charCount").text(charCount + "/30");
+            }
+            else{
+                $("#charCount").text("-" + (charCount - 30));
+            }
+
+            // Disable button if message is empty, whitespace, or over 30 characters
+            if (charCount > 30 || message.trim().length === 0) {
+                if(charCount > 30){
+                    $("#charCount").addClass("exceeded");
+                }
+                disable_button();
             } else {
                 $("#charCount").removeClass("exceeded");
-                $("#post").prop("disabled", false).removeClass("btn-disabled").addClass("btn-primary"); // Enable button when valid
+                enable_button();
             }
+        }
+
+        function disable_button(){
+            $("#post").prop("disabled", true).addClass("btn-disabled").removeClass("btn-primary");
+        }
+
+        function enable_button(){
+            $("#post").prop("disabled", false).removeClass("btn-disabled").addClass("btn-primary");
         }
 
         $(document).ready(function(){
@@ -80,10 +107,19 @@
                 createPost(userMessage);
             });
 
+            $("#userInput").keydown(function(event) {
+                if (event.key === "Enter") {
+                    event.preventDefault(); // Prevents new line in textarea
+                    if (!$("#post").prop("disabled")) { // Check if button is enabled
+                        $("#post").click(); // Simulate button click
+                    }
+                }
+            });
+
             // Start with the button disabled
-            $("#post").prop("disabled", true).addClass("btn-disabled").removeClass("btn-primary");
+            disable_button();
         });
-        `
+    
 </script>
 </head>
 <body style="background-color: black;">
