@@ -27,14 +27,7 @@
             padding: 20px;
         }
 
-        .trash{
-            background-color: lightgray;
-            padding: 10px;
-            border: 1px solid black;
-            width: 90%;
-
-        }
-
+        
         .textbox {
             border: 2px solid lightgray;
             border-radius: 8px;
@@ -44,6 +37,17 @@
             min-height: 30px;  /* Gives it a good default size */ 
             font-size: 16px;    /* Common size for input fields */
         }
+        
+        .textbox.error {
+            border: 2px solid red;
+            color: red;
+        }
+        
+        .textbox.error:focus {
+            border: 2px solid red !important;
+            outline: none;
+            box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+        }
 
         .sale-log {
             /* background-color: beige; */
@@ -51,11 +55,28 @@
             margin-top: 10px;
             border-radius: 5px;
         }
+        
+        .trash{
+            background-color: lightgray;
+            padding: 10px;
+            border: 1px solid black;
+            width: 90%;
+
+        }
+
+        .trash.highlight {
+            background-color: yellow !important; /* Highlights when row is dragged over */
+        }
 
         .sale-entry {
-            /* border-bottom: 1px solid gray; */
             padding: 5px 0;
+            cursor: move;
         }
+
+        .sale-entry:hover {
+            background-color: lightyellow;
+        }
+
 
     </style>
 
@@ -68,7 +89,7 @@
                     Columbia Paper Infinity
                 </div>
                 <div class="col-12" style="padding: 15px;">
-                    <div class="trash">
+                    <div id="trash" class="trash">
                         Trash
                     </div>
                 </div>
@@ -106,8 +127,24 @@
                 renderSales();
 
                 $("#submit-btn").click(function(){
+                    
                     let client_name = $("#client-input").val().trim();
                     let reams = $("#ream-input").val().trim();
+
+                    //if Client box empty
+                    if(client_name === ""){
+                        $("#client-input").addClass("error");
+                        $("#client-input").focus();
+                        return;
+                    }
+
+                    //if ream box empty or is not a number
+                    if(reams === "" || isNaN(reams) || Number(reams) <= 0){
+                        $("#ream-input").addClass("error");
+                        $("#ream-input").css("color", "red");
+                        $("#ream-input").focus();
+                        return;
+                    }
 
                     if(client_name && !clients.includes(client_name)){
                         clients.push(client_name)
@@ -128,6 +165,24 @@
 
                 });
 
+                //error handling:
+                // input changes in the client box
+                $("#client-input").on("input", function() {
+                    if ($(this).val().trim() !== "") {
+                        $(this).removeClass("error");
+                    }
+                });
+
+                //input changes for ream box
+                $("#ream-input").on("input", function() {
+                    let input = $(this).val().trim()
+                    if ( input !== "" && !isNaN(input) && Number(input) > 0) {
+                        $(this).removeClass("error");
+                        $(this).css("color", "black");
+                    }
+                });
+
+                //enter key
                 $("#ream-input").keydown(function(event){
                     if(event.key === "Enter"){
                         $("#submit-btn").click();
@@ -138,27 +193,62 @@
             function renderSales() {
             $("#sales-records").empty(); // Clear existing list
 
-            sales.forEach((sale, index) => {
-                let saleEntry = `
-                    <div class="row sale-entry">
-                        <div class="col-3">${sale.salesperson}</div>
-                        <div class="col-4">${sale.client}</div>
-                        <div class="col-3">${sale.reams}</div>
-                        <div class="col-1">
-                            <button class="btn btn-danger btn-sm delete-btn" data-index="${index}">X</button>
+                sales.forEach((sale, index) => {
+                    let saleEntry = $(`
+                        <div class="row sale-entry">
+                            <div class="col-3">${sale.salesperson}</div>
+                            <div class="col-4">${sale.client}</div>
+                            <div class="col-3">${sale.reams}</div>
+                            <div class="col-1">
+                                <button class="btn btn-danger btn-sm delete-btn" data-index="${index}">X</button>
+                            </div>
                         </div>
-                    </div>
-                `;
-                $("#sales-records").append(saleEntry);
-            });
+                    `);
+                    $("#sales-records").append(saleEntry);
 
-            // delete buttons
-            $(".delete-btn").click(function(){
-                let index = $(this).data("index");
-                sales.splice(index, 1); // Remove from model
-                renderSales(); // Refresh view
-            });
-        }
+                    // Make sales rows draggable
+                    saleEntry.draggable({
+                        revert: "invalid",
+                        helper: "clone", 
+                        cursor: "move",
+                        start: function() {
+                            $(this).css("opacity", "0.5");
+                        },
+                        stop: function() {
+                            $(this).css("opacity", "1");
+                        }
+                    });
+                });
+
+                // delete buttons
+                $(".delete-btn").click(function(){
+                    let index = $(this).data("index");
+                    sales.splice(index, 1); // Remove from model
+                    renderSales(); // Refresh view
+                });
+
+                    // Make the trash bin droppable
+                    $("#trash").droppable({
+                        accept: ".sale-entry",
+                        over: function() {
+                            $(this).addClass("highlight"); 
+                        },
+                        out: function() {
+                            $(this).removeClass("highlight");
+                        },
+                        drop: function(event, ui) {
+                            $(this).removeClass("highlight");
+
+                            let index = ui.draggable.data("index");
+                            sales.splice(index, 1); // Remove from model
+                            renderSales(); // Refresh view
+                        }
+                    });
+
+            }
+
+            
+
 
         </script>
     
