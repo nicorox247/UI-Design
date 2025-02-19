@@ -1,0 +1,168 @@
+<!DOCTYPE html><html lang="en">
+    
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- JQuery -->
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <!-- BootStrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel="stylesheet" crossorigin="anonymous">
+
+    <title>Columbia Paper Infinity</title>
+
+    <style>
+        .blue{
+            background-color: rgb(101, 189, 201);
+        }
+
+        .head{
+            font-size: xx-large;
+            font-weight: 450;
+            padding: 20px;
+        }
+
+        .trash{
+            background-color: lightgray;
+            padding: 10px;
+            border: 1px solid black;
+            width: 90%;
+
+        }
+
+        .textbox {
+            border: 2px solid lightgray;
+            border-radius: 8px;
+            padding: 5px;
+            width: 100%;
+            max-width: 400px; /* Allows it to expand but not too much */
+            min-height: 30px;  /* Gives it a good default size */ 
+            font-size: 16px;    /* Common size for input fields */
+        }
+
+        .sale-log {
+            /* background-color: beige; */
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        .sale-entry {
+            /* border-bottom: 1px solid gray; */
+            padding: 5px 0;
+        }
+
+    </style>
+
+
+  </head>
+    <body>
+        <div class="container">
+            <div class="row blue">
+                <div class="col-12 head">
+                    Columbia Paper Infinity
+                </div>
+                <div class="col-12" style="padding: 15px;">
+                    <div class="trash">
+                        Trash
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="padding: 10px">
+                <div class="col-3">
+                    Log your paper sales:
+                </div>
+                <div class="col-4">
+                    <input id="client-input" class="textbox" placeholder="Client"/>
+                </div>
+                <div class="col-3">
+                    <input id="ream-input" class="textbox" placeholder="# Reams"/>
+                </div>
+                <div class="col-2">
+                    <button id="submit-btn" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+
+            <div class="sale-log">
+                <div id="sales-records"></div>
+            </div>
+        </div>
+
+        <script src="log_sales.js"></script>
+        <script>
+
+            const SALESPERSON = "Nick";
+
+            $(document).ready(function(){
+                $("#client-input").autocomplete({
+                    source: clients
+                });
+
+                renderSales();
+
+                $("#submit-btn").click(function(){
+                    let client_name = $("#client-input").val().trim();
+                    let reams = $("#ream-input").val().trim();
+
+                    if(client_name && !clients.includes(client_name)){
+                        clients.push(client_name)
+                        $("#client-input").autocomplete("option", "source", clients);
+                    }
+
+                    sales.unshift({
+                        salesperson: SALESPERSON,
+                        client: client_name,
+                        reams: reams
+                    });
+
+                    // Refresh view
+                    renderSales();
+
+                    $("#client-input").val("").focus();
+                    $("#ream-input").val("");
+
+                });
+
+                $("#ream-input").keydown(function(event){
+                    if(event.key === "Enter"){
+                        $("#submit-btn").click();
+                    }
+                })
+            });
+
+            function renderSales() {
+            $("#sales-records").empty(); // Clear existing list
+
+            sales.forEach((sale, index) => {
+                let saleEntry = `
+                    <div class="row sale-entry">
+                        <div class="col-3">${sale.salesperson}</div>
+                        <div class="col-4">${sale.client}</div>
+                        <div class="col-3">${sale.reams}</div>
+                        <div class="col-1">
+                            <button class="btn btn-danger btn-sm delete-btn" data-index="${index}">X</button>
+                        </div>
+                    </div>
+                `;
+                $("#sales-records").append(saleEntry);
+            });
+
+            // delete buttons
+            $(".delete-btn").click(function(){
+                let index = $(this).data("index");
+                sales.splice(index, 1); // Remove from model
+                renderSales(); // Refresh view
+            });
+        }
+
+        </script>
+    
+    </body>
+
+    
+  </html>
