@@ -13,11 +13,11 @@
     <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
 
 </head> -->
-<body>
-    <div class="container">
-        <h1>Welcome to Columbia Paper Infinity!</h1>
-        <p>Remember to log all your sales on this site, even ones you make on the phone.</p>
-        <a href="log_sales.html" class="button">Log Your Sales</a>
+<body class="welcome">
+    <div class="container welcome">
+        <h1 class="welcome">Welcome to Columbia Paper Infinity!</h1>
+        <p class="welcome">Remember to log all your sales on this site, even ones you make on the phone.</p>
+        <a href="{{ url_for('infinity') }}" class="button welcome">Log Your Sales</a>
     </div>
 </body>
 </html>

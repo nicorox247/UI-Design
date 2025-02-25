@@ -22,15 +22,13 @@ data = [
 def hello_world():
    return render_template('welcome.html')   
 
-
-# @app.route('/hello/<name>')
-# def hello_name(name=None):
-#     return render_template('hello_name.html', name=name) 
-
-
 @app.route('/infinity')
-def people():
+def infinity():
     return render_template('log_sales.html', data=data)  
+
+# @app.route('/log_sales')
+# def log_sales():
+#     return render_template('log_sales.html')
 
 
 # AJAX FUNCTIONS
