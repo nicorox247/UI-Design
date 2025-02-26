@@ -4,18 +4,6 @@ from flask import Response, request, jsonify
 app = Flask(__name__)
 
 
-current_id = 2
-data = [
-    {
-        "id": 1,
-        "name": "michael scott"
-    },
-    {
-        "id": 2,
-        "name": "jim halpert"
-    },
-]
-
 current_id = 4
 sales = [
     {
@@ -62,14 +50,10 @@ def hello_world():
 def infinity():
     return render_template('log_sales.html', clients=clients, sales=sales)  
 
-@app.route('/people')
-def people():
-    return render_template('people.html', data=data)
-
 
 # AJAX FUNCTIONS
 
-@app.route('/delete_sale')
+@app.route('/delete_sale', methods=['POST'])
 def delete_sale():
     global sales
 
