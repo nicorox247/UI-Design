@@ -43,7 +43,7 @@ clients = [
 # ROUTES
 
 @app.route('/')
-def hello_world():
+def welcome():
    return render_template('welcome.html')   
 
 @app.route('/infinity')
