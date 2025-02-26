@@ -1,9 +1,3 @@
-#hello_div{
-    padding-top:  10px;
-    padding-bottom:  10px;
-    color: olive;
-}
-
 body.welcome {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -38,4 +32,65 @@ p.welcome {
 }
 .button.welcome:hover {
     background-color: #0056b3;
+}
+
+/* HW4 Styles */
+.blue{
+    background-color: #b2d8d8;
+}
+
+.head{
+    font-size: xx-large;
+    font-weight: 450;
+    padding: 20px;
+}
+
+
+.textbox {
+    border: 2px solid lightgray;
+    border-radius: 8px;
+    padding: 5px;
+    width: 100%;
+    max-width: 400px; /* Allows it to expand but not too much */
+    min-height: 30px;  /* Gives it a good default size */ 
+    font-size: 16px;    /* Common size for input fields */
+}
+
+.textbox.error {
+    border: 2px solid red;
+    color: red;
+}
+
+.textbox.error:focus {
+    border: 2px solid red !important;
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+}
+
+.sale-log {
+    /* background-color: beige; */
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.trash{
+    background-color: lightgray;
+    padding: 10px;
+    border: 1px solid black;
+    width: 90%;
+
+}
+
+.trash.highlight {
+    background-color: yellow !important; /* Highlights when row is dragged over */
+}
+
+.sale-entry {
+    padding: 5px 0;
+    cursor: move;
+}
+
+.sale-entry:hover {
+    background-color: lightyellow;
 }
