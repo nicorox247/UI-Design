@@ -1,0 +1,135 @@
+body.welcome {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #b2d8d8;
+    text-align: center;
+}
+.container.welcome {
+    width: 70%;
+    margin: 40px auto;
+    padding: 10px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+h1.welcome {
+    color: #333;
+}
+p.welcome {
+    font-size: 18px;
+    color: #555;
+}
+.button.welcome {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.button.welcome:hover {
+    background-color: #0056b3;
+}
+
+/* HW4 Styles */
+.blue{
+    background-color: #b2d8d8;
+}
+
+.head{
+    font-size: xx-large;
+    font-weight: 450;
+    padding: 20px;
+}
+
+
+.textbox {
+    border: 2px solid lightgray;
+    border-radius: 8px;
+    padding: 5px;
+    width: 100%;
+    max-width: 400px; /* Allows it to expand but not too much */
+    min-height: 30px;  /* Gives it a good default size */ 
+    font-size: 16px;    /* Common size for input fields */
+}
+
+.textbox.error {
+    border: 2px solid red;
+    color: red;
+}
+
+.textbox.error:focus {
+    border: 2px solid red !important;
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+}
+
+.sale-log {
+    /* background-color: beige; */
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.trash{
+    background-color: lightgray;
+    padding: 10px;
+    border: 1px solid black;
+    width: 90%;
+
+}
+
+.trash.highlight {
+    background-color: yellow !important; /* Highlights when row is dragged over */
+}
+
+.sale-entry {
+    padding: 5px 0;
+    cursor: move;
+}
+
+.sale-entry:hover {
+    background-color: lightyellow;
+}
+
+/* NEW STYLES HW6 */
+
+/* CARDS */
+.card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    border-bottom: #333;
+}
+
+.card-text {
+    flex-grow: 1;
+    color: rgb(139, 139, 139);
+}
+
+.card .btn {
+    margin-top: auto;
+}
+
+.card-img-top {
+    height: 200px;  /* Adjust this value as needed */
+    object-fit: contain;  /* Ensures full image is visible while maintaining aspect ratio */
+    width: 100%; /* Makes sure it spans the card width */
+    padding: 10px; /* Adds spacing to prevent cropping */
+}
+
+
+/* CONTAINERS */
+
+.card-container {
+    padding-bottom: 60px;
+}
