@@ -1,5 +1,17 @@
 $(document).ready(function () {
 
+    $("#search-form").submit(function (event) {
+        let searchInput = $("#search-input"); // Get the input field
+        let query = searchInput.val().trim(); // Trim whitespace
+
+        if (query === "") {
+            event.preventDefault(); // Stop form submission
+            searchInput.val(""); // Clear the input field
+            searchInput.focus(); // Keep focus on the search bar
+            return;
+        }
+    });
+
     function loadCards(data, containerId) {
         let cardContainer = $(`#${containerId}`);
         cardContainer.empty();  // Clear previous content
@@ -12,7 +24,7 @@ $(document).ready(function () {
                         <div class="card-body">
                             <h5 class="card-title">${company.ticker}</h5>
                             <p class="card-text">${company.description.substring(0, 100)}...</p>
-                            <a href="#" class="btn btn-primary">View Details</a>
+                            <a href="/view/${company.id}" class="btn btn-primary">View Details</a>
                         </div>
                     </div>
                 </div>

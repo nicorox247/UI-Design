@@ -30,12 +30,11 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             <a class="nav-link" href="/">Home</a>
-            <a class="nav-link" href="/infinity">Log Sales</a>
           </div>
           
           <!-- Search form inside the navbar -->
-          <form class="form-inline ml-auto d-flex" action="{{ url_for('search') }}" method="get">
-            <input class="form-control me-2" type="search" name="query" placeholder="Search..." aria-label="Search" required>
+          <form id="search-form" class="form-inline ml-auto d-flex" action="{{ url_for('search') }}" method="get">
+            <input id="search-input" class="form-control me-2" type="search" name="query" placeholder="Search..." aria-label="Search" required>
             <button class="btn btn-primary" type="submit">Search</button>
           </form>
         </div>
