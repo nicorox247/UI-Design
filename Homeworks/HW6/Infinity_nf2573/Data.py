@@ -253,14 +253,27 @@ favorites_names = ["Rivian", "Tesla", "Nio"]
 favorites_data = [ev_companies[name] for name in favorites_names if name in ev_companies]
 
 
-# print("Favorites Data:", favorites_data)
-print("Type of Favorites:", type(favorites_data))
 
 # ROUTES
 
 @app.route('/')
 def welcome():
-   return render_template('welcome.html', ev_companies=ev_companies, favorites=favorites_data)   
+   return render_template('welcome.html', ev_companies=ev_companies, favorites=favorites_data)
+
+@app.route('/search', methods=['GET']) 
+def search():
+    query = request.args.get("query", "").strip().lower()
+    if not query:
+        return render_template("search_results.html", results=[], query=query)
+
+    # Filter ev_companies based on search query
+    results = [
+        {"name": name, **data}
+        for name, data in ev_companies.items()
+        if query in name.lower() or query in data["ticker"].lower()
+    ]
+
+    return render_template("search_results.html", results=results, query=query)
 
 @app.route('/infinity')
 def infinity():
