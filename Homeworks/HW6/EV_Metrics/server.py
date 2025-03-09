@@ -1,3 +1,4 @@
+import random
 from flask import Flask
 from flask import render_template
 from flask import Response, request, jsonify
@@ -93,7 +94,7 @@ ev_companies = {
         "strong backing from investors like Alibaba and Volkswagen, Xpeng "
         "continues to expand its market presence in China and internationally.",
 
-        "share_price": "$120",
+        "share_price": "$12.90",
         "models": ["X9", "G9", "G6", "P7", "P5", "G3i"]
     },
 
@@ -133,7 +134,7 @@ ev_companies = {
         "Ford aims to challenge Tesla and legacy automakers in the growing "
         "electric market while leveraging its strong brand loyalty.",
 
-        "share_price": "$120",
+        "share_price": "$23.85",
         "models": ["Mustang Mach-E", "F-150 Lightning"]
     },
 
@@ -152,7 +153,7 @@ ev_companies = {
         "and practicality, Li Auto is rapidly growing its presence in China's competitive "
         "EV market.",
 
-        "share_price": "$120",
+        "share_price": "$11.89",
         "models": ["L6", "L7", "L8", "L9", "Mega"]
     },
 
@@ -171,7 +172,7 @@ ev_companies = {
         "global footprint, competing with Tesla and legacy automakers in both China and "
         "international markets.",
 
-        "share_price": "$120",
+        "share_price": "$3.40",
         "models": ["BYD Han"]
     },
 
@@ -189,7 +190,7 @@ ev_companies = {
         "company aims to disrupt the luxury EV market with its futuristic design, "
         "powerful performance, and cutting-edge technology.",
 
-        "share_price": "$120",
+        "share_price": "$2.33",
         "models": ["FF 91 2.0", "FF 91 2.0 Futurist", "FF 91 2.0 Futurist Alliance"]
     },
 
@@ -207,12 +208,14 @@ ev_companies = {
         "Stellantis investing heavily in electrification, Dodge aims to balance its "
         "heritage of raw power with the future of electric mobility.",
 
-        "share_price": "$120",
+        "share_price": "$35.27",
         "models": ["Charger Daytona", "Hornet R/T"]
     }
 }
 
-favorites_names = ["Rivian", "Tesla", "Nio"]
+# NICK FELIX CODE YAY HELLO I'M NICK
+
+favorites_names = random.sample(list(ev_companies.keys()), 3)
 
 favorites_data = [ev_companies[name] for name in favorites_names if name in ev_companies]
 
@@ -221,8 +224,8 @@ favorites_data = [ev_companies[name] for name in favorites_names if name in ev_c
 # ROUTES
 
 @app.route('/')
-def welcome():
-   return render_template('welcome.html', ev_companies=ev_companies, favorites=favorites_data)
+def home():
+   return render_template('home.html', ev_companies=ev_companies, favorites=favorites_data)
 
 @app.route('/search', methods=['GET']) 
 def search():
