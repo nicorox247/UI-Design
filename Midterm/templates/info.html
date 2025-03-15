@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ company.name }} ({{ company.ticker }})</h2>
+
+    <img src="{{ company.logo }}" class="img-fluid" alt="{{ company.ticker }} Logo" style="max-width: 200px;">
+    
+    <p><strong>Description:</strong> {{ company.description }}</p>
+    <p><strong>Share Price:</strong> {{ company.share_price }}</p>
+
+    <h4>Models:</h4>
+    <ul>
+        {% for model in company.models %}
+            <li>{{ model }}</li>
+        {% endfor %}
+    </ul>
+
+    <a href="/" class="btn btn-secondary">Back to Home</a>
+</div>
+{% endblock %}

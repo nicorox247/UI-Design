@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<script type="text/javascript" src="{{ url_for('static', filename = 'home.js') }}"></script>
+
+<script>
+    let ev_companies =  {{ev_companies | tojson }};
+    let favorites = {{favorites | tojson}};
+    // console.log(data)
+</script>
+
+<body class="welcome">
+    <div class="container welcome">
+        <h1 class="welcome">Welcome to Electric Vehicle Metrics!</h1>
+        <p class="welcome">Search and compare Electric vehicle companies and their metrics.</p>
+        <div class="battery-container">
+            <div class="battery" id="battery">
+                <div class="charge" id="charge"></div>
+            </div>
+            <p id="battery-status">Click to Charge ⚡</p>
+        </div>
+        
+    </div>
+
+    <!-- Favorites Section -->
+    <div class="container mt-5 card-container">
+        <h2 class="text-center">Favorite EV Companies</h2>
+        <div id="card-element" class="row justify-content-center">
+            <!-- Cards will be dynamically inserted here -->
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}

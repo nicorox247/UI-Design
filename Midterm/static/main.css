@@ -1,0 +1,92 @@
+/* NEW STYLES HW6 */
+
+/* CARDS */
+.card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    border-bottom: #333;
+}
+
+.card-text {
+    flex-grow: 1;
+    color: rgb(139, 139, 139);
+}
+
+.card .btn {
+    margin-top: auto;
+}
+
+.card-img-top {
+    height: 200px;  /* Adjust this value as needed */
+    object-fit: contain;  /* Ensures full image is visible while maintaining aspect ratio */
+    width: 100%; /* Makes sure it spans the card width */
+    padding: 10px; /* Adds spacing to prevent cropping */
+}
+
+
+/* CONTAINERS */
+
+.card-container {
+    padding-bottom: 60px;
+}
+
+/* Battery animation */
+
+.battery-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.battery {
+    width: 120px;
+    height: 50px;
+    border: 4px solid black;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.battery::after {
+    content: "";
+    width: 10px;
+    height: 20px;
+    background: black;
+    position: absolute;
+    top: 50%;
+    right: -12px;
+    transform: translateY(-50%);
+    border-radius: 4px;
+}
+
+.charge {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #4caf50, #76ff03);
+    position: absolute;
+    transition: width 2s ease-in-out;
+}
+
+.shock {
+    animation: shock-animation 0.2s infinite alternate;
+}
+
+@keyframes shock-animation {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+}
+
+/* Highlight seach results */
+.highlight {
+    background-color: yellow;
+    font-weight: bold;
+    padding: 2px;
+    border-radius: 3px;
+}
