@@ -35,7 +35,7 @@ $(document).ready(function () {
             let card = `
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
-                        <img src="${company.logo}" class="card-img-top" alt="${company.id} Logo">
+                        <img src="${company.logo}" class="card-img-top" alt="${company.alt_description}" Logo">
                         <div class="card-body">
                             <h5 class="card-title">${company.name}</h5>
                             <p class="card-text">${company.description.substring(0, 100)}...</p>
@@ -99,12 +99,12 @@ $(document).ready(function () {
         }
     });
 
-    // ✅ Load Home Page Favorites if `favorites` exists
+    // Load Home Page Favorites if `favorites` exists
     if (typeof favorites !== "undefined") {
         loadCards(favorites, "card-element");
     }
 
-    // ✅ Load Search Results if `results` exists
+    // Load Search Results if `results` exists
     if (typeof results !== "undefined") {
         loadResults(results, "list");
     }

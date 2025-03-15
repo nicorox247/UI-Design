@@ -34,6 +34,8 @@ ev_companies = {
         "rugged capability, and software innovation, Rivian is positioning "
         "itself as a competitor to Tesla and legacy automakers in the EV space.",
 
+        "alt_description": "Rivian logo in gold, representing the American electric vehicle manufacturer focused on adventure-oriented EVs and sustainable transportation.",
+
         "share_price" : "$12.00",
         "models" : ["R1S", "R1T", "R2", "R3"]
     },
@@ -53,6 +55,9 @@ ev_companies = {
         "autonomous driving, energy storage, and sustainable technology, Tesla "
         "continues to lead the industry in innovation and market dominance.",
         
+        "alt_description": "Tesla logo in red with a stylized 'T', representing the American electric vehicle and clean energy company known for innovation in EVs and battery technology.",
+
+
         "share_price" : "$120.00",
         "models" : ["Model X", "Model Y", "Model S", "Model 3", "Cybertruck"]
 
@@ -74,6 +79,9 @@ ev_companies = {
         "Investment Fund (PIF), Lucid is positioning itself as a strong competitor "
         "to Tesla and other luxury automakers.",
 
+        "alt_description": "Lucid Motors logo in black, featuring a sleek and modern font, representing the luxury electric vehicle manufacturer known for high-performance EVs.",
+
+
         "share_price": "$2.30",
         "models": ["Air", "Gravity"]
     },
@@ -94,6 +102,8 @@ ev_companies = {
         "strong backing from investors like Alibaba and Volkswagen, Xpeng "
         "continues to expand its market presence in China and internationally.",
 
+        "alt_description": "Xpeng Motors logo in black, featuring a stylized 'X' next to the company name, representing the Chinese EV manufacturer known for smart, high-tech electric vehicles.",
+
         "share_price": "$12.90",
         "models": ["X9", "G9", "G6", "P7", "P5", "G3i"]
     },
@@ -112,6 +122,8 @@ ev_companies = {
         "With significant backing from Chinese state-owned funds and "
         "international investors, Nio continues to expand its battery-swapping "
         "infrastructure and global presence.",
+
+        "alt_description": "Nio logo in black, featuring a stylized 'N' with a curved upper section resembling a rising horizon, alongside Chinese characters, representing the Chinese premium electric vehicle manufacturer.",
 
         "share_price": "$4.63",
         "models": ["ET9", "ET7", "ET5", "EC6", "EC7", "ES6", "ES7", "ES8"]
@@ -134,6 +146,8 @@ ev_companies = {
         "Ford aims to challenge Tesla and legacy automakers in the growing "
         "electric market while leveraging its strong brand loyalty.",
 
+        "alt_description": "Ford logo in blue and white, featuring a stylized script of the word 'Ford' inside an oval, representing the American automaker known for its legacy in combustion and electric vehicles.",
+
         "share_price": "$23.85",
         "models": ["Mustang Mach-E", "F-150 Lightning"]
     },
@@ -152,6 +166,8 @@ ev_companies = {
         "range-extended hybrids. With strong financial backing and a focus on efficiency "
         "and practicality, Li Auto is rapidly growing its presence in China's competitive "
         "EV market.",
+
+        "alt_description": "Li Auto logo in white and green, featuring a stylized 'L' symbol alongside Chinese characters, representing the Chinese automaker known for its extended-range electric vehicles (EREVs).",
 
         "share_price": "$11.89",
         "models": ["L6", "L7", "L8", "L9", "Mega"]
@@ -172,6 +188,8 @@ ev_companies = {
         "global footprint, competing with Tesla and legacy automakers in both China and "
         "international markets.",
 
+        "alt_description": "BYD logo in red, featuring the letters 'BYD' enclosed in an oval, representing the Chinese automaker known for its electric vehicles and battery technology.",
+
         "share_price": "$3.40",
         "models": ["BYD Han"]
     },
@@ -189,6 +207,8 @@ ev_companies = {
         "for a premium, tech-centric user experience. Despite ongoing challenges, the "
         "company aims to disrupt the luxury EV market with its futuristic design, "
         "powerful performance, and cutting-edge technology.",
+        
+        "alt_description": "Faraday Future logo in gray, featuring a stylized 'FF' symbol above the company's name, representing the American EV startup focused on luxury, high-tech electric vehicles.",
 
         "share_price": "$2.33",
         "models": ["FF 91 2.0", "FF 91 2.0 Futurist", "FF 91 2.0 Futurist Alliance"]
@@ -207,6 +227,8 @@ ev_companies = {
         "performance-focused DNA, alongside the Hornet R/T plug-in hybrid. With "
         "Stellantis investing heavily in electrification, Dodge aims to balance its "
         "heritage of raw power with the future of electric mobility.",
+
+        "alt_description": "Dodge logo with a black background, featuring the brand name in bold white text and a red slash, representing the high-performance muscle car brand now entering the EV market.",
 
         "share_price": "$35.27",
         "models": ["Charger Daytona", "Hornet R/T"]
@@ -309,6 +331,38 @@ def add_company():
     }
 
     return jsonify({"success": True, "id": new_id})
+
+
+@app.route('/edit/<company_id>', methods=['GET', 'POST'])
+def edit_company(company_id):
+    # Find the company with the matching ID
+    company_name = None
+    company_data = None
+
+    for name, data in ev_companies.items():
+        if data["id"] == company_id:  # Match by ID
+            company_name = name
+            company_data = data
+            break
+
+    if company_data is None:
+        return "Company not found", 404  # Handle invalid ID
+
+    if request.method == 'POST':  # Handle form submission
+        company_data['ticker'] = request.form.get('ticker', company_data['ticker'])
+        company_data['logo'] = request.form.get('logo', company_data['logo'])
+        company_data['description'] = request.form.get('description', company_data['description'])
+        company_data['share_price'] = request.form.get('share_price', company_data['share_price'])
+
+        # Handle models correctly: Only update if a new value is provided
+        models_input = request.form.get('models', '').strip()
+        if models_input:  # Only update if the user entered something
+            company_data['models'] = [m.strip() for m in models_input.split(',') if m.strip()]
+
+        return jsonify({'success': True, 'redirect': f'/view/{company_id}'})
+
+    return render_template('edit.html', company={**company_data, "name": company_name})
+
 
 
 

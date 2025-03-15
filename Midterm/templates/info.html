@@ -4,7 +4,7 @@
 <div class="container mt-4">
     <h2>{{ company.name }} ({{ company.ticker }})</h2>
 
-    <img src="{{ company.logo }}" class="img-fluid" alt="{{ company.ticker }} Logo" style="max-width: 200px;">
+    <img src="{{ company.logo }}" class="img-fluid" alt="{{ company.alt_description }}" style="max-width: 200px;">
     
     <p><strong>Description:</strong> {{ company.description }}</p>
     <p><strong>Share Price:</strong> {{ company.share_price }}</p>
@@ -17,5 +17,7 @@
     </ul>
 
     <a href="/" class="btn btn-secondary">Back to Home</a>
+    <a href="{{ url_for('edit_company', company_id=company.id) }}" class="btn btn-secondary btn-sm mt-2">Edit</a>
+
 </div>
 {% endblock %}

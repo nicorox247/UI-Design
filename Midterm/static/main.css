@@ -1,92 +1,182 @@
-/* NEW STYLES HW6 */
+/* ===========================
+   Color Variables
+   =========================== */
+   :root {
+    --base-color: #0284C7;   /* Bright Blue (Prominent Base Color) */
+    --accent-color: #F97316; /* Vibrant Orange (Accent Color) */
+    --light-grey: #F2F2F2;   /* Light Grey */
+    --dark-grey: #333333;    /* Dark Grey */
+  }
+  
+  /* ===========================
+     Global Styles
+     =========================== */
+  body {
+    background-color: var(--light-grey);
+    color: var(--dark-grey);
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif; /* Optionally set a font */
+  }
 
-/* CARDS */
-.card {
+  /* ===========================
+   Navbar Styling
+   =========================== */
+/* NAVBAR STYLING */
+.navbar {
+    background-color: #0284C7 !important; /* Force blue base color */
+    padding: 15px 20px;
+}
+
+.navbar a {
+    color: white !important; /* Ensures all links are white */
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    color: #F97316 !important; /* Accent orange on hover */
+}
+
+.navbar .search-box {
+    border: 1px solid white;
+    background: white;
+    color: #1F2937;
+}
+
+.navbar .search-box::placeholder {
+    color: #4B5563; /* Dark grey for placeholder text */
+}
+
+.navbar .btn {
+    background-color: white;
+    color: #0284C7;
+    border: none;
+}
+
+.navbar .btn:hover {
+    background-color: #F97316;
+    color: white;
+}
+
+  
+  /* ===========================
+     Cards
+     =========================== */
+  .card {
     height: 100%;
     display: flex;
     flex-direction: column;
-}
-
-.card-body {
+    background-color: #fff; /* White background for cards */
+    border: 1px solid var(--dark-grey); /* Subtle border */
+    border-radius: 4px;
+  }
+  
+  .card-body {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    border-bottom: #333;
-}
-
-.card-text {
+    border-bottom: 1px solid var(--dark-grey); /* Updated to dark grey */
+    padding: 1rem;
+  }
+  
+  .card-text {
     flex-grow: 1;
-    color: rgb(139, 139, 139);
-}
-
-.card .btn {
+    color: var(--dark-grey); /* Use dark grey for text */
+    margin-bottom: 1rem;
+  }
+  
+  .card .btn {
     margin-top: auto;
-}
-
-.card-img-top {
-    height: 200px;  /* Adjust this value as needed */
-    object-fit: contain;  /* Ensures full image is visible while maintaining aspect ratio */
-    width: 100%; /* Makes sure it spans the card width */
-    padding: 10px; /* Adds spacing to prevent cropping */
-}
-
-
-/* CONTAINERS */
-
-.card-container {
+    background-color: var(--base-color);
+    border-color: var(--base-color);
+    color: #fff;
+  }
+  
+  .card .btn:hover {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+  }
+  
+  .card-img-top {
+    height: 200px;       /* Adjust as needed */
+    object-fit: contain; /* Ensures full image is visible while maintaining aspect ratio */
+    width: 100%;
+    padding: 10px;       /* Adds spacing to prevent cropping */
+  }
+  
+  /* ===========================
+     Containers
+     =========================== */
+  .card-container {
     padding-bottom: 60px;
-}
-
-/* Battery animation */
-
-.battery-container {
+  }
+  
+  /* ===========================
+     Battery Animation
+     =========================== */
+  .battery-container {
     text-align: center;
     margin-top: 20px;
-}
-
-.battery {
+  }
+  
+  .battery {
     width: 120px;
     height: 50px;
-    border: 4px solid black;
+    border: 4px solid var(--dark-grey);
     border-radius: 8px;
     position: relative;
     overflow: hidden;
     display: inline-block;
-}
-
-.battery::after {
+  }
+  
+  .battery::after {
     content: "";
     width: 10px;
     height: 20px;
-    background: black;
+    background: var(--dark-grey);
     position: absolute;
     top: 50%;
     right: -12px;
     transform: translateY(-50%);
     border-radius: 4px;
-}
-
-.charge {
+  }
+  
+  .charge {
     width: 0%;
     height: 100%;
+    /* Keeping green gradient for the charging effect, 
+       but you could also use your palette if desired */
     background: linear-gradient(90deg, #4caf50, #76ff03);
     position: absolute;
     transition: width 2s ease-in-out;
-}
-
-.shock {
+  }
+  
+  .shock {
     animation: shock-animation 0.2s infinite alternate;
-}
-
-@keyframes shock-animation {
+  }
+  
+  @keyframes shock-animation {
     0% { transform: scale(1); }
     100% { transform: scale(1.1); }
-}
-
-/* Highlight seach results */
-.highlight {
-    background-color: yellow;
+  }
+  
+  /* ===========================
+     Highlighted Search Results
+     =========================== */
+  .highlight {
+    background-color: yellow; /* Keep as-is or pick accent color if you want */
     font-weight: bold;
     padding: 2px;
     border-radius: 3px;
-}
+  }
+  
+  /* ===========================
+     Auto-Resize Textarea
+     =========================== */
+  .auto-resize {
+    width: 100%;
+    overflow-y: auto; /* or hidden, depending on your preference */
+    resize: vertical; /* allows manual resizing */
+    min-height: 50px;
+  }
+  

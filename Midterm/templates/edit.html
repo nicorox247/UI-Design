@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<script type="text/javascript" src="{{ url_for('static', filename = 'edit.js') }}"></script>
+
+<div class="container mt-4">
+    <h2>Edit Company: {{ company.ticker }}</h2>
+    <form id="edit-form">
+        <div class="form-group">
+            <label for="ticker">Ticker:</label>
+            <input type="text" id="ticker" name="ticker" class="form-control" value="{{ company.ticker }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="logo">Logo URL:</label>
+            <input type="text" id="logo" name="logo" class="form-control" value="{{ company.logo }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea
+              id="description"
+              name="description"
+              class="form-control"
+              rows="6"
+              style="resize: vertical;"
+            >{{ company.description }}</textarea>    
+        </div>
+
+        <div class="form-group">
+            <label for="share_price">Share Price:</label>
+            <input type="text" id="share_price" name="share_price" class="form-control" value="{{ company.share_price }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="models">Models (comma-separated):</label>
+            <input type="text" id="models" name="models" class="form-control" value="{{ ', '.join(company.models) }}">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" id="discard-changes" class="btn btn-danger">Discard Changes</button>
+    </form>
+</div>
+{% endblock %}
