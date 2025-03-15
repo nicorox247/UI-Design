@@ -217,9 +217,8 @@ ev_companies = {
 
 favorites_names = random.sample(list(ev_companies.keys()), 3)
 
-favorites_data = [ev_companies[name] for name in favorites_names if name in ev_companies]
-
-
+# Create a list of dictionaries with the company name included
+favorites_data = [{"name": name, **ev_companies[name]} for name in favorites_names]
 
 # ROUTES
 
@@ -257,6 +256,59 @@ def view_company(id):
     company_data = {**company_data, "name": company_name}
 
     return render_template("info.html", company=company_data)
+
+@app.route('/add', methods=['GET'])
+def add_form():
+    """Render the form for adding a new company."""
+    return render_template("add.html")
+
+@app.route('/add', methods=['POST'])
+def add_company():
+    """Handle form submission and add a new company."""
+    data = request.get_json()
+
+    # Validate input fields
+    name = data.get("name", "").strip()
+    ticker = data.get("ticker", "").strip().upper()
+    logo = data.get("logo", "").strip()
+    description = data.get("description", "").strip()
+    share_price = data.get("share_price", "").strip()
+    models = [m.strip() for m in data.get("models", "").split(",") if m.strip()]
+
+    errors = {}
+
+    # Error handling
+    if not name:
+        errors["name"] = "Company name is required."
+    if not ticker:
+        errors["ticker"] = "Ticker symbol is required."
+    if not logo:
+        errors["logo"] = "Logo URL is required."
+    if not description or len(description) < 20:
+        errors["description"] = "Description must be at least 20 characters long."
+    if not share_price or not share_price.replace(".", "", 1).isdigit():
+        errors["share_price"] = "Share price must be a valid number."
+    if not models:
+        errors["models"] = "At least one model is required."
+
+    # If errors exist, return them
+    if errors:
+        return jsonify({"success": False, "errors": errors}), 400
+
+    # Create unique ID
+    new_id = str(len(ev_companies) + 1)
+
+    # Add to dictionary
+    ev_companies[name] = {
+        "id": new_id,
+        "ticker": ticker,
+        "logo": logo,
+        "description": description,
+        "share_price": f"${share_price}",
+        "models": models
+    }
+
+    return jsonify({"success": True, "id": new_id})
 
 
 

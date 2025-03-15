@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<script type="text/javascript" src="{{ url_for('static', filename='add.js') }}"></script>
+
+<div class="container mt-4">
+    <h2>Add a New Electric Vehicle Company</h2>
+    <div id="success-message" class="alert alert-success d-none">
+        New item successfully created. <a id="view-link" href="#">See it here</a>.
+    </div>
+
+    <form id="add-company-form">
+        <div class="form-group">
+            <label for="name">Company Name</label>
+            <input type="text" class="form-control" id="name" required>
+            <small class="error-message text-danger"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="ticker">Stock Ticker</label>
+            <input type="text" class="form-control" id="ticker" required>
+            <small class="error-message text-danger"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="logo">Logo URL</label>
+            <input type="url" class="form-control" id="logo" required>
+            <small class="error-message text-danger"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" rows="3" required></textarea>
+            <small class="error-message text-danger"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="share_price">Share Price ($)</label>
+            <input type="text" class="form-control" id="share_price" required>
+            <small class="error-message text-danger"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="models">Models (Comma-separated)</label>
+            <input type="text" class="form-control" id="models" required>
+            <small class="error-message text-danger"></small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Company</button>
+    </form>
+</div>
+{% endblock %}

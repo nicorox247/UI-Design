@@ -72,7 +72,6 @@ $(document).ready(function () {
                     </li>
                 `;
     
-                console.log("Appending List Item:", listItem); // Debugging
                 listContainer.append(listItem);
             });
     
